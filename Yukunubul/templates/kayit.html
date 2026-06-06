@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YükünüBul - Kurumsal Kayıt</title>
+    <style>
+        :root { --brand-dark: #0f172a; --brand-silver: #64748b; --brand-green: #10b981; --bg-premium: #f8fafc; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-premium); margin: 0; padding: 40px 20px; display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .container { display: flex; max-width: 950px; width: 100%; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; flex-wrap: wrap; border: 1px solid #e2e8f0; }
+        .info-panel { background: var(--brand-dark); color: white; padding: 40px; flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center; }
+        .info-panel h2 { color: var(--brand-green); margin-top: 0; font-size: 28px; }
+        .info-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid var(--brand-green); }
+        .info-box h4 { margin: 0 0 5px 0; color: white; font-size: 16px; }
+        .info-box p { margin: 0; font-size: 14px; color: #cbd5e1; line-height: 1.5; }
+        .form-panel { padding: 40px; flex: 1.5; min-width: 300px; }
+        .form-panel h2 { margin-top: 0; color: var(--brand-dark); margin-bottom: 25px; font-size: 24px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .full-width { grid-column: 1 / -1; }
+        
+        label { font-weight: bold; display: block; margin-top: 5px; color: #334155; font-size: 13px; }
+        input[type="text"], input[type="password"], select, input[type="number"] { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 14px; transition: 0.2s; background: #f8fafc; }
+        input:focus, select:focus { border-color: var(--brand-green); outline: none; background: white; }
+        
+        .password-container { position: relative; }
+        .password-container input { padding-right: 40px; }
+        .toggle-icon { position: absolute; right: 12px; top: 14px; cursor: pointer; font-size: 16px; color: #64748b; }
+        
+        .terms-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; font-size: 12px; color: #64748b; height: 90px; overflow-y: scroll; margin-top: 15px; line-height: 1.5; }
+        .terms-box strong { color: #0f172a; }
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; margin-bottom: 20px; }
+        .checkbox-group input { margin-top: 3px; cursor: pointer; transform: scale(1.1); }
+        .checkbox-group label { font-size: 13px; color: #334155; font-weight: normal; margin-top: 0; cursor: pointer; }
+        
+        button { width: 100%; background-color: var(--brand-green); color: white; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; }
+        button:hover { background-color: #059669; }
+        .login-link { display: block; text-align: center; margin-top: 20px; color: var(--brand-silver); text-decoration: none; font-size: 14px; font-weight: 600; }
+        
+        @media (max-width: 768px) { .container { flex-direction: column; } .form-grid { grid-template-columns: 1fr; } }
+    </style>
+    <script>
+        function togglePassword(inputId, icon) {
+            var x = document.getElementById(inputId);
+            if (x.type === "password") { x.type = "text"; icon.textContent = "🙈"; } 
+            else { x.type = "password"; icon.textContent = "👁️"; }
+        }
+        function validateForm(event) {
+            var p1 = document.getElementById('sifre').value;
+            var p2 = document.getElementById('sifre_tekrar').value;
+            var onay = document.getElementById('kabul').checked;
+            
+            if (p1 !== p2) { alert("Şifreler eşleşmiyor!"); event.preventDefault(); return false; }
+            if (!onay) { alert("Hizmet Sözleşmesini onaylamalısınız."); event.preventDefault(); return false; }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="info-panel">
+        <h2>YükünüBul'a Katıl</h2>
+        <p style="color: #94a3b8; margin-bottom: 30px;">Tüm hesaplar resmi evrak ve güvenlik doğrulamasından geçmektedir.</p>
+        <div class="info-box"><h4>🛡️ Doğrulanmış Hesaplar</h4><p>Sahte ilanları önlemek için TCKN veya Vergi Kimlik Numarası zorunludur.</p></div>
+        <div class="info-box"><h4>🔒 Güvenli Ödeme</h4><p>Komisyon dışı işlemlerde tespit edilen hesaplar kalıcı olarak silinir.</p></div>
+    </div>
+
+    <div class="form-panel">
+        <h2>Kurumsal / Bireysel Kayıt</h2>
+        <form action="/kayit" method="POST" onsubmit="return validateForm(event)">
+            
+            <div class="form-grid">
+                <div>
+                    <label>Adınız Soyadınız / Yetkili Kişi:</label>
+                    <input type="text" name="isim" required placeholder="Örn: Ahmet Yılmaz">
+                </div>
+                <div>
+                    <label>Telefon Numaranız:</label>
+                    <input type="text" name="telefon" required placeholder="0555...">
+                </div>
+                
+                <div class="full-width">
+                    <label>Hesap Türü:</label>
+                    <select name="tip" required>
+                        <option value="Taşıyıcı (Kamyon/Tır/Kamyonet)">Taşıyıcı (Kamyon/Tır/Kamyonet)</option>
+                        <option value="Kurumsal Şirket (Yük Veren)">Kurumsal Şirket (Yük Veren)</option>
+                        <option value="Bireysel Müşteri (Ev/Eşya Taşıtan)">Bireysel Müşteri (Ev/Eşya Taşıtan)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Araç Plakası veya Şirket Adı:</label>
+                    <input type="text" name="detay" required placeholder="Plaka veya Unvan">
+                </div>
+                <div>
+                    <label>TCKN veya Vergi Kimlik No:</label>
+                    <input type="number" name="kimlik_no" required placeholder="10 veya 11 Haneli">
+                </div>
+
+                <div>
+                    <label>Giriş Şifreniz:</label>
+                    <div class="password-container">
+                        <input type="password" id="sifre" name="sifre" required placeholder="En az 6 karakter">
+                        <span class="toggle-icon" onclick="togglePassword('sifre', this)">👁️</span>
+                    </div>
+                </div>
+                <div>
+                    <label>Şifrenizi Tekrar Girin:</label>
+                    <div class="password-container">
+                        <input type="password" id="sifre_tekrar" required placeholder="Doğrulayın">
+                        <span class="toggle-icon" onclick="togglePassword('sifre_tekrar', this)">👁️</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terms-box">
+                <strong>YÜKÜNÜBUL HİZMET VE KOMİSYON SÖZLEŞMESİ</strong><br>
+                <strong>1. Komisyon Şartı:</strong> Platform, başarılı her taşıma işleminden <strong>%5 komisyon</strong> tahsil eder.<br>
+                <strong>2. Hesabın Kullanımı ve Doğruluk:</strong> Kullanıcı, platforma sunduğu resmi kimlik/VKN bilgilerinin doğruluğunu taahhüt eder. İlan açıklamalarına telefon numarası gizlemek veya platform dışı komisyonsuz işlem yapmaya çalışmak, yapay zeka filtrelerimizle tespit edilir. Sahte ilan verilmesi veya bu ihlallerin tespiti durumunda hesap kalıcı olarak <strong>askıya alınır</strong>.
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="kabul" name="kabul" required>
+                <label for="kabul">Platform Kullanım Koşullarını ve <strong>%5 Komisyon Şartını</strong> okudum, kabul ediyorum.</label>
+            </div>
+
+            <button type="submit">Doğrulanmış Hesabımı Oluştur</button>
+        </form>
+        <a href="/giris" class="login-link">Zaten hesabın var mı? Giriş Yap ➔</a>
+    </div>
+</div>
+
+</body>
+</html>
