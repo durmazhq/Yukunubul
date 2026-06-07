@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>YükünüBul - Yeni İlan Oluştur</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0F4F8; margin: 40px 20px; }
+        .form-container { background: white; padding: 40px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0px 4px 20px rgba(0,0,0,0.08); border-top: 8px solid #10b981; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #444; font-size: 14px; }
+        input, textarea { width: 100%; padding: 12px; margin-top: 6px; border: 2px solid #e0e0e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; background-color: #10b981; color: white; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 25px;}
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2 style="color: #0f172a; margin-top: 0;">🚚 Dijital İrsaliyeli İlan Oluştur</h2>
+    <p style="color: #64748b; font-size: 14px;">Doldurduğunuz bilgilere göre sistem otomatik bir E-İrsaliye (Takip Kodu) oluşturacaktır.</p>
+    <form action="/ilan-ver" method="POST">
+        <label>📍 Yükleme Noktası (İlçe/İl):</label>
+        <input type="text" name="nereden" required placeholder="Örn: Tuzla/İstanbul">
+        <label>🏁 Teslim Noktası (İlçe/İl):</label>
+        <input type="text" name="nereye" required placeholder="Örn: Ostim/Ankara">
+        <label>📦 Yük Cinsi ve Tonaj:</label>
+        <input type="text" name="yuk" required placeholder="Örn: 20 Ton Demir Profil">
+        <label>🚛 İstenen Araç Tipi:</label>
+        <input type="text" name="arac" required placeholder="Örn: Açık Kasa Tır">
+        <label>💰 Ödeme Tutarı (Havuz Korumalı - TL):</label>
+        <input type="number" name="fiyat" required placeholder="Örn: 25000">
+        <label>📝 Operasyon Notları:</label>
+        <textarea name="acıklama" placeholder="Liman giriş belgesi gereklidir." style="min-height: 80px;"></textarea>
+        
+        <button type="submit">İlanı Yayınla & Akıllı Eşleşmeyi Başlat</button>
+        <a href="/" style="display: block; text-align: center; margin-top: 15px; color: #64748b; text-decoration: none; font-weight: bold;">Vazgeç</a>
+    </form>
+</div>
+</body>
+</html>
