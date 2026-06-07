@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durmaz Pay - Güvenli Ödeme</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 50px 20px; }
+        .payment-container { background: white; padding: 40px; border-radius: 12px; max-width: 450px; margin: auto; box-shadow: 0px 4px 15px rgba(0,0,0,0.05); border-top: 8px solid #ff9800; }
+        h2 { text-align: center; color: #e65100; margin-top: 0; }
+        .logo-text { text-align: center; font-weight: bold; color: #1a73e8; font-size: 14px; margin-top: -10px; margin-bottom: 25px; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
+        input { width: 100%; padding: 12px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        .card-row { display: flex; gap: 10px; }
+        button { width: 100%; background-color: #ff9800; color: white; padding: 14px; border: none; border-radius: 6px; margin-top: 25px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background-color: #e65100; }
+        .basari { background-color: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; margin-bottom: 20px; }
+        .back-btn { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 14px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>💳 Durmaz Pay Güvencesi</h2>
+    <div class="logo-text">Durmaz Tech Lojistik Güvenlik Altyapısı</div>
+    
+    {% if basari %}
+        <div class="basari">{{ basari }}</div>
+    {% endif %}
+
+    <form action="/odeme" method="POST">
+        <label>Kart Üzerindeki İsim Soyisim:</label>
+        <input type="text" required placeholder="Ahmet Yılmaz">
+
+        <label>Kart Numarası:</label>
+        <input type="text" required placeholder="0000 0000 0000 0000" maxlength="19">
+
+        <div class="card-row">
+            <div style="flex: 1;">
+                <label>Son Kullanma:</label>
+                <input type="text" required placeholder="AA/YY" maxlength="5">
+            </div>
+            <div style="flex: 1;">
+                <label>CVC (Güvenlik Kodu):</label>
+                <input type="password" required placeholder="***" maxlength="3">
+            </div>
+        </div>
+
+        <label>Güvenceye Alınacak Navlun Tutarı (TL):</label>
+        <input type="number" required placeholder="Örn: 18500">
+
+        <button type="submit">Bakiyeyi Güvence Havuzuna Aktar</button>
+    </form>
+    
+    <a href="/" class="back-btn">◀ Ana Panele Dön</a>
+</div>
+
+</body>
+</html>

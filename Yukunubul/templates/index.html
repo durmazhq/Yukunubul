@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>YükünüBul - Dijital Yük Paneli</title>
+    <style>
+        :root { --brand-dark: #0f172a; --brand-silver: #64748b; --brand-green: #10b981; --bg-premium: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-premium); margin: 0; padding: 0; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background: white; border-bottom: 1px solid #e2e8f0; }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; color: var(--brand-dark); text-decoration: none; }
+        .logo-icon { width: 36px; height: 36px; fill: var(--brand-green); }
+        .auth-buttons { display: flex; gap: 10px; align-items: center; }
+        .btn-premium { background: var(--brand-dark); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-outline { background: transparent; color: var(--brand-dark); border: 2px solid var(--brand-dark); padding: 8px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .hero-section { text-align: center; padding: 60px 8%; background: linear-gradient(180deg, white, var(--bg-premium)); }
+        .hero-badge { background: #d1fae5; color: #065f46; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+        .hero-section h2 { font-size: 42px; font-weight: 800; margin: 0 0 15px 0; }
+        .hero-section h2 span { color: var(--brand-green); }
+        .stats-container { display: flex; justify-content: center; gap: 50px; margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 20px; }
+        .stat-box h3 { font-size: 32px; font-weight: 800; margin: 0; }
+        .stat-box p { font-size: 13px; color: var(--brand-silver); margin: 5px 0 0 0; font-weight: bold; }
+        .ilan-container { padding: 40px 8%; background: white; }
+        .grid-sistem { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .durmaz-card { background: var(--bg-premium); border-radius: 8px; padding: 25px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .card-rota { font-size: 20px; font-weight: 700; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; }
+        .badge-irsaliye { position: absolute; top: 25px; right: 25px; background: #e2e8f0; font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .price-tag { font-size: 24px; font-weight: 800; color: var(--brand-green); margin-top: 15px; display: block; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo-area">
+            <svg class="logo-icon" viewBox="0 0 24 24"><path d="M20 8h-3V4H4c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h4c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm12 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-7l2.25 3H17v-3h1.5z"/></svg>
+            <span>YÜKÜNÜBUL</span>
+        </a>
+        <div class="auth-buttons">
+            {% if giriş_yapan %}
+                {% if session.get('kullanici_tipi') == 'Kurucu Lider' %}
+                    <a href="/admin" class="btn-outline" style="border-color: #f59e0b; color: #f59e0b;">👑 Yönetim</a>
+                {% endif %}
+                <a href="/profil" class="btn-premium">👤 Profilim</a>
+            {% else %}
+                <a href="/giris" class="btn-outline">Giriş Yap</a>
+                <a href="/kayit" class="btn-premium">Bize Katıl</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-badge">🔒 %5 Şeffaf Komisyon Altyapısı Aktif</div>
+        <h2>Yük Taşımacılığında <span>Dijital Dönem</span></h2>
+        <p style="color: var(--brand-silver);">Resmi evrak onaylı firmalar ve gerçek taşıyıcı esnafı tek çatıda.</p>
+        <a href="/ilan-ver" class="btn-premium" style="background: var(--brand-green); padding: 12px 30px;">🚀 Hemen İlan Ver</a>
+        <div class="stats-container">
+            <div class="stat-box"><h3>{{ tasiyici_sayisi }}</h3><p>AKTİF TAŞIYICI</p></div>
+            <div class="stat-box"><h3>{{ sirket_sayisi }}</h3><p>KAYITLI FİRMA</p></div>
+            <div class="stat-box"><h3>{{ sefer_sayisi }}</h3><p>GÜVENLİ SEFER</p></div>
+        </div>
+    </header>
+
+    <section class="ilan-container">
+        <h3 style="margin-bottom: 25px;">📢 Güncel Sevkiyat İlanları</h3>
+        <div class="grid-sistem">
+            {% for ilan in ilanlar %}
+            <div class="durmaz-card">
+                <span class="badge-irsaliye">{{ ilan.irsaliye }}</span>
+                <div>
+                    <div class="card-rota">📍 {{ ilan.nereden }} ➔ {{ ilan.nereye }}</div>
+                    <p style="margin: 5px 0;">📦 <strong>Yük:</strong> {{ ilan.yuk }}</p>
+                    <p style="margin: 5px 0;">🚛 <strong>Araç:</strong> {{ ilan.arac }}</p>
+                    <p style="font-size: 13px; color: var(--brand-silver); margin: 5px 0;">🏢 <strong>Firma:</strong> {{ ilan.veren_firma }}</p>
+                    <div style="background:white; padding:10px; border-radius:5px; margin-top:10px; font-size:13px; border:1px solid #e2e8f0;">{{ ilan.acıklama }}</div>
+                </div>
+                <div>
+                    <span class="price-tag">{{ ilan.fiyat }} TL</span>
+                    <a href="tel:0555" class="btn-premium" style="background: var(--brand-green); display:block; text-align:center; margin-top:15px; font-size:13px; padding:8px;">📞 İletişime Geç</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
