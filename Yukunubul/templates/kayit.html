@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - YükünüBul</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8f9fa; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .register-card { 
+            background: #ffffff; 
+            padding: 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            width: 100%; 
+            max-width: 420px; 
+        }
+        h2 { 
+            text-align: center; 
+            color: #1a1a1a; 
+            margin-bottom: 30px; 
+            font-weight: 700;
+            font-size: 24px;
+        }
+        .input-group { margin-bottom: 16px; }
+        label { 
+            display: block; 
+            margin-bottom: 6px; 
+            color: #4a4a4a; 
+            font-size: 13px; 
+            font-weight: 500;
+        }
+        input, select { 
+            width: 100%; 
+            padding: 12px 14px; 
+            border: 1px solid #e1e4e8; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 14px; 
+            transition: border-color 0.2s;
+            background-color: #fafbfc;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #24292e;
+            background-color: #fff;
+        }
+        .checkbox-group { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 10px; 
+            margin-top: 15px; 
+        }
+        .checkbox-group input[type="checkbox"] { 
+            width: 16px; 
+            height: 16px; 
+            margin-top: 2px; 
+            cursor: pointer; 
+            accent-color: #24292e;
+        }
+        .checkbox-label { 
+            color: #586069; 
+            font-size: 13px; 
+            line-height: 1.5; 
+            cursor: pointer; 
+        }
+        .checkbox-label a { color: #0366d6; text-decoration: none; }
+        .checkbox-label a:hover { text-decoration: underline; }
+        
+        .btn { 
+            width: 100%; 
+            padding: 14px; 
+            background: #1a1a1a; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            margin-top: 20px; 
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #333333; }
+        .link-text { text-align: center; margin-top: 20px; font-size: 14px; color: #586069; }
+        .link-text a { color: #1a1a1a; text-decoration: none; font-weight: 600; }
+        .link-text a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <h2>YükünüBul'a Katıl</h2>
+        <form method="POST">
+            <div class="input-group">
+                <label>Ad Soyad / Yetkili İsim</label>
+                <input type="text" name="isim" placeholder="Örn: Ahmet Yılmaz" required>
+            </div>
+            <div class="input-group">
+                <label>E-Posta Adresi</label>
+                <input type="email" name="email" placeholder="ornek@mail.com" required>
+            </div>
+            <div class="input-group">
+                <label>Telefon Numarası</label>
+                <input type="tel" name="telefon" placeholder="0555 123 45 67" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Kullanıcı Tipi</label>
+                <select name="tip">
+                    <option value="Bireysel (Ev / Eşya Taşıtan)">Bireysel (Ev / Eşya Taşıtan)</option>
+                    <option value="Taşıyıcı (Nakliyeci / Kamyonetçi)">Taşıyıcı (Nakliyeci / Kamyonetçi)</option>
+                    <option value="Şirket (Yük Veren Firma)">Şirket (Yük Veren Firma)</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Firma Adı / Plaka (Bireyselseniz "Yok" yazın)</label>
+                <input type="text" name="detay" placeholder="Örn: 34 ABC 123 veya Yok" required>
+            </div>
+            <div class="input-group">
+                <label>T.C. Kimlik / Vergi No</label>
+                <input type="text" name="kimlik_no" placeholder="11 Haneli T.C. veya Vergi No" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Güvenli Şifre</label>
+                <input type="password" name="sifre" placeholder="••••••••" required>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="sozlesme" required>
+                <label for="sozlesme" class="checkbox-label">
+                    <a href="#">Kullanım Koşulları ve Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
+                </label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="sms_izin" name="sms_izin">
+                <label for="sms_izin" class="checkbox-label">
+                    YükünüBul'daki yeniliklerden <strong>SMS ve E-posta</strong> ile haberdar olmak istiyorum.
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Hesabımı Oluştur</button>
+        </form>
+        <div class="link-text">Zaten üye misin? <a href="/giris">Giriş Yap</a></div>
+    </div>
+</body>
+</html>
