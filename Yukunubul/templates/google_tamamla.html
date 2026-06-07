@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaydı Tamamla - YükünüBul</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f5f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 400px; }
+        h3 { text-align: center; color: #111; margin-bottom: 10px; }
+        p { text-align: center; color: #666; font-size: 14px; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; color: #555; font-size: 14px; }
+        input, select { width: 100%; padding: 11px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Son Bir Adım, {{ name }}</h3>
+        <p>Lojistik işlemlerinde size kolayca ulaşabilmemiz için aşağıdaki alanları tamamlayın.</p>
+        <form method="POST">
+            <div class="input-group">
+                <label>E-Posta Adresiniz</label>
+                <input type="text" value="{{ email }}" disabled style="background: #eee;">
+            </div>
+            <div class="input-group">
+                <label>Telefon Numarası</label>
+                <input type="tel" name="telefon" placeholder="05551234567" required>
+            </div>
+            <div class="input-group">
+                <label>Kullanıcı Tipi</label>
+                <select name="tip">
+                    <option value="Taşıyıcı (Bireysel Nakliyeci)">Taşıyıcı (Bireysel Nakliyeci)</option>
+                    <option value="Şirket (Yük Veren Firma)">Şirket (Yük Veren Firma)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Firma Adı / Araç Plakası</label>
+                <input type="text" name="detay" placeholder="Örn: Plaka veya Firma Ünvanı" required>
+            </div>
+            <div class="input-group">
+                <label>T.C. Kimlik / Vergi No</label>
+                <input type="text" name="kimlik_no" placeholder="Güvenlik için gereklidir" required>
+            </div>
+            <button type="submit" class="btn">Kurulumu Tamamla & Giriş Yap</button>
+        </form>
+    </div>
+</body>
+</html>
