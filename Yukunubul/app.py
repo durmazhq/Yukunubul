@@ -7,21 +7,9 @@ app = Flask(__name__)
 app.secret_key = 'durmaz_tech_holding_master_premium_key_2026'
 app.permanent_session_lifetime = timedelta(days=365)
 
+# Boş liste olarak başlattık. O inatçı Aslan Lojistik ilanı tamamen silindi!
 kullanicilar = []
-ilanlar = [
-    {
-        "id": 100,
-        "nereden": "İstanbul / Tuzla", 
-        "nereye": "Ankara / Ostim", 
-        "yuk": "12 Ton Gıda Maddesi", 
-        "arac": "Tır", 
-        "fiyat": 18500.0,
-        "acıklama": "Sabah saatlerinde yükleme yapılacak. Sıra bekleme yoktur.",
-        "veren_firma": "Aslan Lojistik A.Ş.",
-        "durum": "Bekliyor",
-        "irsaliye": "IRS-48291-IST-ANK"
-    }
-]
+ilanlar = []
 holding_kasasi = 0.0 
 ilan_id_sayaci = 101
 
@@ -59,6 +47,7 @@ def kayit_ol():
     if request.method == 'POST':
         yeni_kullanici = {
             "isim": request.form.get('isim'),
+            "email": request.form.get('email'),        # E-posta alanı eklendi
             "telefon": request.form.get('telefon'),
             "tip": request.form.get('tip'),
             "detay": request.form.get('detay'),
@@ -75,24 +64,28 @@ def kayit_ol():
 def giriş_yap():
     hata_mesaji = None
     if request.method == 'POST':
-        tel = request.form.get('telefon')
+        giris_verisi = request.form.get('telefon_veya_email') # Hem tel hem mail kabul edecek alan
         sifre = request.form.get('sifre')
         
-        if tel == ADMIN_USER and sifre == ADMIN_PASS:
+        # Admin kontrolü
+        if giris_verisi == ADMIN_USER and sifre == ADMIN_PASS:
             session.permanent = True
             session['kullanici_adi'] = "Mertcan Durmaz"
             session['kullanici_tipi'] = "Kurucu Lider"
             session['kullanici_detay'] = "Durmaz Holding"
             session['kullanici_telefon'] = "Gizli"
+            session['kullanici_email'] = "Gizli"
             return redirect(url_for('admin_paneli'))
             
+        # Kullanıcı kontrolü (İster e-posta ister telefon eşleşsin)
         for k in kullanicilar:
-            if k['telefon'] == tel and k['sifre'] == sifre:
+            if (k['telefon'] == giris_verisi or k.get('email') == giris_verisi) and k['sifre'] == sifre:
                 session.permanent = True
                 session['kullanici_adi'] = k['isim']
                 session['kullanici_tipi'] = k['tip']
                 session['kullanici_detay'] = k['detay']
                 session['kullanici_telefon'] = k['telefon']
+                session['kullanici_email'] = k.get('email', '')
                 return redirect(url_for('ana_sayfa'))
         hata_mesaji = "Giriş bilgileri hatalı."
     return render_template('giris.html', hata=hata_mesaji)
